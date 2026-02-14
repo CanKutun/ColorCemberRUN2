@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI_Text_tr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: tr
+  m_SharedData: {fileID: 11400000, guid: 69e8ef1d9f0f82f458ffe0586d7fcd15, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 443198730240
+    m_Localized: ZIPLA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 792777191424
+    m_Localized: DURDUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1141541957632
+    m_Localized: SKOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1321288855552
+    m_Localized: TEKRAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1729675653120
+    m_Localized: DEVAM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57883193765888
+    m_Localized: "OYUN B\u0130TT\u0130"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58112177598464
+    m_Localized: TEKRAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58278632747008
+    m_Localized: "\xC7IKI\u015E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60993450536960
+    m_Localized: Ne yapmak istersin?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64697452982272
+    m_Localized: OYUN DURAKLATILDI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 65513941364736
+    m_Localized: DEVAM ET
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2649830618034176
+    m_Localized: "BA\u015ELA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2650002936819712
+    m_Localized: AYARLAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10507648956100608
+    m_Localized: "AYAKKABILAR G\u0130Y\u0130L\u0130YOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10507938157555712
+    m_Localized: "KO\u015EALIM!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10566208050163712
+    m_Localized: "EN Y\xDCKSEK SKOR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1050736197342320
+    m_Localized: HAZIR OL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15685346741448704
+    m_Localized: HEDEF
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

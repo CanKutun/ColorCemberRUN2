@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5938087838335396303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3319240352428669121}
+  - component: {fileID: 2505381018867642693}
+  - component: {fileID: 1503231967791341288}
+  - component: {fileID: 1928034541470637495}
+  - component: {fileID: 3984129077952000470}
+  m_Layer: 0
+  m_Name: Top
+  m_TagString: Top
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3319240352428669121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938087838335396303}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -3.6, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &2505381018867642693
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938087838335396303}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -2413806693520163455, guid: b66a3de3937010f4ea8dc7a592ef088e, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!58 &1503231967791341288
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938087838335396303}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.025702864, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.42390978
+--- !u!50 &1928034541470637495
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938087838335396303}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 5
+--- !u!114 &3984129077952000470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5938087838335396303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87eb041fc998bc140a48b42041ef1d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renkler:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+  - {r: 0.735849, g: 0.28648984, b: 0.20478818, a: 1}
+  - {r: 0.5471698, g: 0.13238464, b: 0.038714837, a: 1}
+  - {r: 0.8301887, g: 0.7701436, b: 0.74012107, a: 1}
+  - {r: 0.8962264, g: 0.5426663, b: 0.31706125, a: 1}
+  - {r: 0.99215686, g: 0.42875174, b: 0, a: 1}
+  - {r: 0.8301887, g: 0.6670908, b: 0.16838734, a: 1}
+  - {r: 1, g: 0.7673632, b: 0, a: 1}
+  - {r: 0.8679245, g: 0.86663777, b: 0.61000353, a: 1}
+  - {r: 0.7935054, g: 0.8207547, b: 0.112273075, a: 1}
+  - {r: 0.9404421, g: 1, b: 0, a: 1}
+  - {r: 0.31729993, g: 0.5377358, b: 0.31198823, a: 1}
+  - {r: 0.01871562, g: 1, b: 0, a: 1}
+  - {r: 0.21, g: 0.89, b: 0.95, a: 1}
+  - {r: 0, g: 0.326, b: 0.39284968, a: 1}
+  - {r: 0, g: 0.62919664, b: 1, a: 1}
+  - {r: 0, g: 0.16835773, b: 0.36862746, a: 1}
+  - {r: 0.49550554, g: 0.56359017, b: 0.8018868, a: 1}
+  - {r: 0.0061821938, g: 0, b: 1, a: 1}
+  - {r: 0.674, g: 0.631, b: 0.823, a: 1}
+  - {r: 0.56961626, g: 0.24292453, b: 0.9716981, a: 1}
+  - {r: 0.2518473, g: 0.0283464, b: 0.46226418, a: 1}
+  - {r: 1, g: 0.0047169924, b: 0.9374199, a: 1}
+  - {r: 1, g: 0.7372549, b: 0.95, a: 1}
+  - {r: 1, g: 0, b: 0.496, a: 1}
+  - {r: 0.3679245, g: 0.09198113, b: 0.21359703, a: 1}
+  - {r: 0.7372549, g: 0.13725491, b: 0.36469594, a: 1}
+  - {r: 0.4716981, g: 0.2736739, b: 0.32161683, a: 1}
+  - {r: 0.688, g: 0, b: 0.109071255, a: 1}
+  - {r: 0.9150943, g: 0.3496351, b: 0.37202805, a: 1}
+  shieldPanel: {fileID: 0}
+  invincibilityTimerText: {fileID: 0}
+  coinliDokunulmazlikSuresi: 5
+  reklimliDokunulmazlikSuresi: 4
+  skorYazisi: {fileID: 0}
+  yuksekSkorYazisi: {fileID: 0}
+  coinYazisi: {fileID: 0}
+  au: {fileID: 8300000, guid: bbfcb8658167ab24783fbcf6b7f316b2, type: 3}
+  au1: {fileID: 8300000, guid: 7cf7135c9fd52fb498129a09f51d439c, type: 3}
+  au2: {fileID: 8300000, guid: d5a5c83e05181ff4e99770a301191fda, type: 3}
+  au3: {fileID: 8300000, guid: 85c7152d28f98124da04492f8a53a667, type: 3}
+  ziplamaGucu: 4
+  invincibilityDuration: 3
+  flashInterval: 0.1
+  SurekliOdulluReklamIzle: 1
+  initialKick: 4
+  maxYSpeed: 8
+  waitingForFirstTapAfterAd: 0
