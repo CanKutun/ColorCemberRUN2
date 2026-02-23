@@ -7569,8 +7569,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hedefText: {fileID: 437864687}
-  hedef: 50
-  hedefAdim: 50
+  hedef: 1000
+  hedefAdim: 1000
 --- !u!4 &230967584
 Transform:
   m_ObjectHideFlags: 0
