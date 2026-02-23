@@ -18,13 +18,12 @@ public class HedefSayac : MonoBehaviour
     public void PuanEkle(int toplamSkor)
     {
         // skor hedefi geçtiyse yeni hedefe geç
-        while (toplamSkor >= hedef)
+        if (toplamSkor >= hedef)
         {
             HedefTamamlandi();
             hedef += hedefAdim;
+            GuncelleYazi();
         }
-
-        GuncelleYazi();
     }
 
     void GuncelleYazi()

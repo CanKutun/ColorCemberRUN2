@@ -7569,8 +7569,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hedefText: {fileID: 437864687}
-  hedef: 1000
-  hedefAdim: 1000
+  hedef: 50
+  hedefAdim: 50
 --- !u!4 &230967584
 Transform:
   m_ObjectHideFlags: 0
@@ -10979,21 +10979,32 @@ MonoBehaviour:
   highScore: 0
   faz: 1
   sonrakiFazSkoru: 1000
+  yol1: {fileID: 375025812}
   score_value: {fileID: 2085840066}
   highScore_value: {fileID: 1535638684}
   altin: {fileID: 7272999356990455799, guid: e1ea0eea07003ef4fbc2bec2670ac778, type: 3}
   miknatis: {fileID: 2050672289732828618, guid: d44c709f70ca62049ae60d37cf25566f, type: 3}
-  kutuk: {fileID: 849240510633060808, guid: 9eb0d27458439b640978cf4193ea05b3, type: 3}
-  tas: {fileID: 7804418143466133621, guid: f6f1a4f80fb97ad4bbb87e3d0fb6afeb, type: 3}
-  araba: {fileID: 3445990439607085414, guid: ea9ba006c6e705744bd94e04487ae5de, type: 3}
   faz1Engeller:
   - {fileID: 849240510633060808, guid: 9eb0d27458439b640978cf4193ea05b3, type: 3}
   - {fileID: 7804418143466133621, guid: f6f1a4f80fb97ad4bbb87e3d0fb6afeb, type: 3}
   - {fileID: 3445990439607085414, guid: ea9ba006c6e705744bd94e04487ae5de, type: 3}
-  - {fileID: 2050672289732828618, guid: d44c709f70ca62049ae60d37cf25566f, type: 3}
-  faz2Engeller: []
-  faz3Engeller: []
-  faz4Engeller: []
+  faz2Engeller:
+  - {fileID: 4499473649287449215, guid: 854ffc7d5c1c69e4296436f9a011aecd, type: 3}
+  - {fileID: 2087758568193547989, guid: 5bbfc86141cff04418ee93c976ee9b8e, type: 3}
+  - {fileID: 1880337314578782210, guid: 8ce2606a33b671d43aa869738f7f3ccb, type: 3}
+  - {fileID: 1791736942980064119, guid: 2e5aec19d977db14f9d5dac2fbe86b8c, type: 3}
+  - {fileID: 6859341377364906947, guid: e527247fe5adde94baed122f9e9b7b24, type: 3}
+  faz3Engeller:
+  - {fileID: 3602852183903258792, guid: c8f13aa840089b14a8ad38173afe7be5, type: 3}
+  - {fileID: 8588946005896577964, guid: 8db89ebf18b8ee647958773e98a40c14, type: 3}
+  - {fileID: 6683532244876705679, guid: b49ea89e10dfe4544a05c40d323808b1, type: 3}
+  faz4Engeller:
+  - {fileID: 5467192477828098428, guid: f1a91f2243a31c24ca5b14d8b708bac1, type: 3}
+  - {fileID: 5669003278433530337, guid: 014d0349e97604d4d8d72c5a571dadbc, type: 3}
+  - {fileID: 6683532244876705679, guid: b49ea89e10dfe4544a05c40d323808b1, type: 3}
+  - {fileID: 1874531736554761657, guid: dad50e69c0339f64d8d619f0b15a9341, type: 3}
+  - {fileID: 4613426905507432224, guid: c6a3401e9c30d094890cf96dcfbba456, type: 3}
+  - {fileID: 2513013384856772014, guid: bc0e7328ac2eb484290571c6a39d891d, type: 3}
   oyun_bitti_paneli: {fileID: 671336709}
   oyunu_durdur_pnl: {fileID: 1277484735}
 --- !u!4 &475270136
@@ -16186,7 +16197,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:69e8ef1d9f0f82f458ffe0586d7fcd15
     m_TableEntryReference:
-      m_KeyId: 58112177598464
+      m_KeyId: 1729675653120
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -16230,7 +16241,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TEKRAR
+  m_text: DEVAM
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -16264,8 +16275,8 @@ MonoBehaviour:
   m_fontSizeMin: 35
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -42320,7 +42331,7 @@ GameObject:
   - component: {fileID: 1786911785}
   - component: {fileID: 1786911784}
   m_Layer: 0
-  m_Name: yol 2
+  m_Name: yol 1
   m_TagString: yol
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

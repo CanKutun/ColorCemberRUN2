@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Microsoft.Win32.SafeHandles;
 
 public class yonetici : MonoBehaviour
 {
+    GameObject[] aktifFaz;
     int yedekPuan;
     int yedekFaz;
     int yedekSonrakiFaz;
+    Dictionary<GameObject, float> yOffset = new Dictionary<GameObject, float>();
+
     public int puan;
     public int highScore;
+
 
     public int faz = 1;
     public int sonrakiFazSkoru = 1000;
 
+    public Transform yol1;
+    private float zeminY;
 
     public TextMeshProUGUI score_value;
     public TextMeshProUGUI highScore_value;
@@ -22,9 +29,11 @@ public class yonetici : MonoBehaviour
     public GameObject altin;
     public GameObject miknatis;
 
-    public GameObject kutuk;
-    public GameObject tas;
-    public GameObject araba;
+    float sonrakiMiknatisZamani = 0f;
+
+  //  public GameObject kutuk;
+  //  public GameObject tas;
+  //  public GameObject araba;
 
     [Header("Faz Engelleri")]
     public GameObject[] faz1Engeller;
@@ -33,6 +42,7 @@ public class yonetici : MonoBehaviour
     public GameObject[] faz4Engeller;
 
     List<GameObject> altinlar;
+    List<GameObject> miknatislar;
     List<GameObject> digerleri;
 
     Transform cocuk;
@@ -43,6 +53,7 @@ public class yonetici : MonoBehaviour
 
     bool rewardUsed = false;
 
+   
     void OnEnable()
     {
         rewardUsed = false;
@@ -51,25 +62,25 @@ public class yonetici : MonoBehaviour
 
     void Start()
     {
+        Collider yolCllider = yol1.GetComponent<Collider>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScore_value.text = highScore.ToString();
+
         altinlar = new List<GameObject>();
+        miknatislar = new List<GameObject>();
         digerleri = new List<GameObject>();
+
         cocuk = GameObject.Find("cocuk").transform;
 
         uretme(altin, 10, altinlar);
-
-        uretme(miknatis, 3, digerleri);
-        uretme(kutuk, 3, digerleri);
-        uretme(tas, 3, digerleri);
-        uretme(araba, 3, digerleri);
+        uretme(miknatis, 3, miknatislar);
 
         InvokeRepeating("altin_uret", 0.0f, 1.0f);
-        InvokeRepeating("engel_uret", 1.5f, 3.0f);
+        InvokeRepeating("miknatis_uret", 5.0f, 12.0f);
 
         score_value.text = puan.ToString();
 
-           FazEngelleriniGuncelle();
+        FazEngelleriniGuncelle(); // engel spawn buradan başlar
     }
 
 
@@ -105,56 +116,23 @@ public class yonetici : MonoBehaviour
         {
             faz++;
             sonrakiFazSkoru += 1000;
-            FazDegisti();
-
             FazEngelleriniGuncelle();
+            FazDegisti();
         }
     }
 
     void engel_uret()
     {
+        if (digerleri.Count == 0) return;
+
         int rast = Random.Range(0, digerleri.Count);
+
+        if (digerleri[rast].tag == "miknatis" && Random.Range(0, 4) != 0)
+            return;
 
         if (digerleri[rast].activeSelf == false)
         {
-            digerleri[rast].SetActive(true);
-
-            //  Eğer bu nesne arabaysa, üzerindeki ArabaKorna'ya cocuk'u ata
-            ArabaKorna korna = digerleri[rast].GetComponent<ArabaKorna>();
-            if (korna != null)
-            {
-                korna.cocuk = cocuk;
-            }
-
-            int rastgele = Random.Range(0, 2);
-
-            if (rastgele == 0)
-            {
-                digerleri[rast].transform.position = new Vector3(-0.5f, -3.0f, cocuk.position.z + 10.0f);
-            }
-
-            if (rastgele == 1)
-            {
-                digerleri[rast].transform.position = new Vector3(-3.0f, -3.0f, cocuk.position.z + 10.0f);
-            }
-
-            if (digerleri[rast].tag == "miknatis")
-            {
-                if (cocuk.gameObject.GetComponent<karakter_kontrol>().miknatis_alindi == true)
-                {
-                    digerleri[rast].SetActive(false);
-                }
-            }
-
-            if (digerleri[rast].name != "miknatis(Clone)")
-            {
-                Vector3 eskiPos = digerleri[rast].transform.position;
-
-                eskiPos.y = -3.6f;
-
-                digerleri[rast].transform.position = eskiPos;
-            }
-
+            SpawnNesne(digerleri[rast]);
         }
         else
         {
@@ -162,52 +140,43 @@ public class yonetici : MonoBehaviour
             {
                 if (nesne.activeSelf == false)
                 {
-                    nesne.SetActive(true);
-
-                    //  Eğer bu nesne arabaysa, üzerindeki ArabaKorna'ya cocuk'u ata
-                    ArabaKorna korna = nesne.GetComponent<ArabaKorna>();
-                    if (korna != null)
-                    {
-                        korna.cocuk = cocuk;
-                    }
-
-                    int rastgele_2 = Random.Range(0, 2);
-
-                    if (rastgele_2 == 0)
-                    {
-                        nesne.transform.position = new Vector3(-0.5f, -3.0f, cocuk.position.z + 10.0f);
-                    }
-
-                    if (rastgele_2 == 1)
-                    {
-                        nesne.transform.position = new Vector3(-3.0f, -3.0f, cocuk.position.z + 10.0f);
-                    }
-
-                    if (nesne.tag == "miknatis")
-                    {
-                        if (cocuk.gameObject.GetComponent<karakter_kontrol>().miknatis_alindi == true)
-                        {
-                            nesne.SetActive(false);
-                        }
-                    }
-
-                    if (digerleri[rast].name != "miknatis(Clone)")
-                    {
-                        Vector3 eskiPos = digerleri[rast].transform.position;
-
-                        eskiPos.y = -3.6f;
-
-                        digerleri[rast].transform.position = eskiPos;
-                    }
-
+                    SpawnNesne(nesne);
                     return;
                 }
             }
         }
     }
 
+    void SpawnNesne(GameObject nesne)
+    {
+        nesne.SetActive(true);
+
+        
+        ArabaKorna korna = nesne.GetComponent<ArabaKorna>();
+        if (korna != null)
+            korna.cocuk = cocuk;
+
+        int rastgele = Random.Range(0, 2);
+        float xPos = (rastgele == 0) ? -0.5f : -3.0f;
+
+        Vector3 pos = nesne.transform.position;
+
+        nesne.transform.position =
+            new Vector3(xPos, pos.y, cocuk.position.z + 10.0f);
+
+        if (nesne.tag == "miknatis")
+        {
+            if (cocuk.GetComponent<karakter_kontrol>().miknatis_alindi)
+                nesne.SetActive(false);
+        }
+    }
+
     public void tekrar_oyna()
     {
+        Debug.Log("TEKRAR BASILDI");
+        Debug.Log("AdsManager null mu? " + (AdsManager.Instance == null));
+        Debug.Log("Reward hazır mı? " + AdsManager.Instance.IsRewardedReady());
+
         if (AdsManager.Instance == null)
         {
             RestartGame();
@@ -231,9 +200,9 @@ public class yonetici : MonoBehaviour
         }
     }
 
-
     void TryInterstitialOrContinue()
     {
+        Time.timeScale = 1f;
         //  GEÇİŞ VARSA  DEVAM
         if (AdsManager.Instance.IsInterstitialReady())
         {
@@ -319,9 +288,12 @@ public class yonetici : MonoBehaviour
             GameObject yeni_nesne = Instantiate(nesne);
             yeni_nesne.SetActive(false);
             liste.Add(yeni_nesne);
+
+            // Prefabın gerçek Y offsetini kaydet
+            yOffset[yeni_nesne] = yeni_nesne.transform.position.y;
         }
     }
-      
+
 
     public void OyunuBitir()
     {
@@ -374,37 +346,48 @@ public class yonetici : MonoBehaviour
             CancelInvoke("engel_uret");
             InvokeRepeating("engel_uret", 1f, 2f);
         }
+
+        FazEngelleriniGuncelle();
     }
 
     void FazEngelleriniGuncelle()
     {
-        // Eski engelleri kapat
+        CancelInvoke("engel_uret");
+
         foreach (GameObject g in digerleri)
             g.SetActive(false);
 
         digerleri.Clear();
 
-        GameObject[] secilen = faz1Engeller;
-
         switch (faz)
         {
-            case 1: secilen = faz1Engeller; break;
-            case 2: secilen = faz2Engeller; break;
-            case 3: secilen = faz3Engeller; break;
-            case 4: secilen = faz4Engeller; break;
+            case 1: aktifFaz = faz1Engeller; break;
+            case 2: aktifFaz = faz2Engeller; break;
+            case 3: aktifFaz = faz3Engeller; break;
+            case 4: aktifFaz = faz4Engeller; break;
+            default: aktifFaz = faz1Engeller; break;
         }
 
-        foreach (GameObject prefab in secilen)
+        if (aktifFaz == null || aktifFaz.Length == 0)
         {
-            uretme(prefab, 3, digerleri);
+            Debug.LogWarning("Faz " + faz + " boş!");
+            return;
         }
 
-        Debug.Log("Faz engelleri güncellendi: " + faz);
+        foreach (GameObject prefab in aktifFaz)
+            uretme(prefab, 3, digerleri);
+
+        InvokeRepeating("engel_uret", 1.5f, 3.0f);
     }
 
     void YedektenDon()
     {
-        Debug.Log("YEDEKTEN DON CALISTI");
+        CancelInvoke("engel_uret");
+        CancelInvoke("altin_uret");
+        CancelInvoke("miknatis_uret");
+
+        StopAllCoroutines();
+
         puan = yedekPuan;
         faz = yedekFaz;
         sonrakiFazSkoru = yedekSonrakiFaz;
@@ -414,16 +397,39 @@ public class yonetici : MonoBehaviour
         SkyManager sky = FindObjectOfType<SkyManager>();
         if (sky != null)
             sky.FazDegisti(faz);
-        FazEngelleriniGuncelle();
+
+        FazEngelleriniGuncelle();   // engel spawn başlar
+
+        //  BUNLARI EKLE
+        InvokeRepeating("altin_uret", 0.0f, 1.0f);
+        InvokeRepeating("miknatis_uret", 5.0f, 12.0f);
 
         oyun_bitti_paneli.SetActive(false);
-        StartCoroutine(GecikmeliDevam());
+        Time.timeScale = 1f;
     }
 
     IEnumerator GecikmeliDevam()
     {
         yield return new WaitForSecondsRealtime(1f);
         Time.timeScale = 1f;
+    }
+
+    void miknatis_uret()
+    {
+        if (Time.time < sonrakiMiknatisZamani)
+            return;
+
+        sonrakiMiknatisZamani = Time.time + Random.Range(8f, 14f);
+
+        foreach (GameObject m in miknatislar)
+        {
+            if (!m.activeSelf)
+            {
+                m.SetActive(true);
+                m.transform.position = new Vector3(-3f, -3f, cocuk.position.z + 12f);
+                return;
+            }
+        }
     }
 
 }
