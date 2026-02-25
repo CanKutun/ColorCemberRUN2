@@ -30,7 +30,10 @@ public class VersionChecker : MonoBehaviour
             Debug.Log("Online Version: " + onlineVersion);
             Debug.Log("Local Version: " + Application.version);
 
-            if (onlineVersion != Application.version)
+            System.Version online = new System.Version(onlineVersion);
+            System.Version local = new System.Version(Application.version);
+
+            if (online > local)
             {
                 SetLanguageText();
                 updatePanel.SetActive(true);
