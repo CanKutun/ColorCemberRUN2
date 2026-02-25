@@ -4,9 +4,14 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Microsoft.Win32.SafeHandles;
+using UnityEngine.Localization.Settings;
 
 public class yonetici : MonoBehaviour
 {
+    public Transform yol2;
+    Vector3 yol1BaslangicPos;
+    Vector3 yol2BaslangicPos;
+    Vector3 cocukBaslangicPos;
     GameObject[] aktifFaz;
     int yedekPuan;
     int yedekFaz;
@@ -66,11 +71,20 @@ public class yonetici : MonoBehaviour
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScore_value.text = highScore.ToString();
 
+        if (LocalizationSettings.SelectedLocale.Identifier.Code == "tr")
+            GameObject.Find("highscore_label")
+                .GetComponent<TextMeshProUGUI>().text = "REKOR";
+        else
+            GameObject.Find("highscore_label")
+                .GetComponent<TextMeshProUGUI>().text = "HIGH SCORE";
+
+       
         altinlar = new List<GameObject>();
         miknatislar = new List<GameObject>();
         digerleri = new List<GameObject>();
 
         cocuk = GameObject.Find("cocuk").transform;
+        cocukBaslangicPos = cocuk.position;
 
         uretme(altin, 10, altinlar);
         uretme(miknatis, 3, miknatislar);
@@ -81,6 +95,14 @@ public class yonetici : MonoBehaviour
         score_value.text = puan.ToString();
 
         FazEngelleriniGuncelle(); // engel spawn buradan başlar
+
+        yol1BaslangicPos = yol1.transform.position;
+        yol2BaslangicPos = yol2.transform.position;
+
+        Debug.Log("HighScore e bagli obje " + highScore_value.gameObject.name);
+        Debug.Log("LABEL OBJ INSTANCE ID: " + GameObject.Find("highscore_label").GetInstanceID());
+        Debug.Log("VALUE OBJ INSTANCE ID: " + highScore_value.gameObject.GetInstanceID());
+        
     }
 
 
@@ -101,6 +123,7 @@ public class yonetici : MonoBehaviour
 
         if (puan > hs)
         {
+            highScore = puan;
             PlayerPrefs.SetInt("HighScore", puan);
             PlayerPrefs.Save();
 
@@ -108,7 +131,7 @@ public class yonetici : MonoBehaviour
 
             // Eğer high score text'in varsa
             if (highScore_value != null)
-                highScore_value.text = puan.ToString();
+                highScore_value.text = highScore.ToString();
         }
 
         // FAZ KONTROLÜ
@@ -382,11 +405,17 @@ public class yonetici : MonoBehaviour
 
     void YedektenDon()
     {
+        Debug.Log("YEDEKTEN DÖN ÇALIŞTI");
         CancelInvoke("engel_uret");
         CancelInvoke("altin_uret");
         CancelInvoke("miknatis_uret");
 
         StopAllCoroutines();
+
+        foreach (GameObject g in digerleri)
+        {
+            g.SetActive(false);
+        }
 
         puan = yedekPuan;
         faz = yedekFaz;
@@ -398,14 +427,44 @@ public class yonetici : MonoBehaviour
         if (sky != null)
             sky.FazDegisti(faz);
 
+       
+
+        yol1.transform.position = yol1BaslangicPos;
+        yol2.transform.position = yol2BaslangicPos;
+
+        cocuk.position = cocukBaslangicPos;
+
         FazEngelleriniGuncelle();   // engel spawn başlar
+
 
         //  BUNLARI EKLE
         InvokeRepeating("altin_uret", 0.0f, 1.0f);
         InvokeRepeating("miknatis_uret", 5.0f, 12.0f);
 
+
         oyun_bitti_paneli.SetActive(false);
+
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        if (highScore_value != null)
+            highScore_value.text = highScore.ToString();
+
         Time.timeScale = 1f;
+
+
+        var label = GameObject.Find("highscore_label")
+    .GetComponent<TextMeshProUGUI>();
+
+        if (LocalizationSettings.SelectedLocale.Identifier.Code == "tr")
+            label.text = "REKOR:";
+        else
+            label.text = "HIGH SCORE:";
+
+        
+
+
+        Debug.Log("LABEL AFTER RESUME: " + label.text);
+
     }
 
     IEnumerator GecikmeliDevam()

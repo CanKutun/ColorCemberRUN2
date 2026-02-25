@@ -29,6 +29,7 @@ public class karakter_kontrol : MonoBehaviour
 
     Collider kendiCollider;
 
+
     float ziplama_gucu = 5.0f;
     float kosma_hizi = 2.0f;
 
@@ -78,6 +79,7 @@ public class karakter_kontrol : MonoBehaviour
         boingSource.playOnAwake = false;
         boingSource.loop = false;
         boingSource.volume = 0.8f;
+
 
     }
 
@@ -147,6 +149,7 @@ public class karakter_kontrol : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+
         // 1) ÖNCE ARABAYI KONTROL EDELİM
         if (collision.gameObject.CompareTag("Araba"))
         {
@@ -221,6 +224,7 @@ public class karakter_kontrol : MonoBehaviour
         // 2) DİĞER ENGELLER (TAŞ / KÜTÜK) → HER TEMAS ÖLÜM
         if (collision.gameObject.CompareTag("engel"))
         {
+
             var y = FindObjectOfType<yonetici>();
 
             y.OyunuBitir();
@@ -365,4 +369,5 @@ public class karakter_kontrol : MonoBehaviour
         // Çarpışmayı tekrar aç
         Physics.IgnoreCollision(kendiCollider, arabaCollider, false);
     }
+
 }
