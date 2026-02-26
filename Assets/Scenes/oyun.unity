@@ -44207,6 +44207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60006106547e0154eabf00dc6e40a6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPausedExternally: 0
   fireflyManager: {fileID: 392737869}
   sun: {fileID: 705507994}
   cycleDuration: 120

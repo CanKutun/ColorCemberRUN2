@@ -68,8 +68,21 @@ public class AdsManager : MonoBehaviour
             return;
         }
 
+        // REKLAM AÇILDIĞINDA → Gece-gündüzü durdur
+        interstitialAd.OnAdFullScreenContentOpened += () =>
+        {
+            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
+            if (cycle != null)
+                cycle.isPausedExternally = true;
+        };
+
+        // REKLAM KAPANDIĞINDA → Gece-gündüzü devam ettir
         interstitialAd.OnAdFullScreenContentClosed += () =>
         {
+            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
+            if (cycle != null)
+                cycle.isPausedExternally = false;
+
             LoadInterstitial();
             onClosed?.Invoke();
         };
@@ -111,8 +124,21 @@ public class AdsManager : MonoBehaviour
 
         bool earned = false;
 
+        // REKLAM AÇILDIĞINDA → Gece-gündüzü durdur
+        rewardedAd.OnAdFullScreenContentOpened += () =>
+        {
+            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
+            if (cycle != null)
+                cycle.isPausedExternally = true;
+        };
+
+        // REKLAM KAPANDIĞINDA → Gece-gündüzü devam ettir
         rewardedAd.OnAdFullScreenContentClosed += () =>
         {
+            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
+            if (cycle != null)
+                cycle.isPausedExternally = false;
+
             LoadRewarded(); // arka planda yeniden yükle
 
             if (earned)

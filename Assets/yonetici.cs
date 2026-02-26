@@ -432,7 +432,7 @@ public class yonetici : MonoBehaviour
         yol1.transform.position = yol1BaslangicPos;
         yol2.transform.position = yol2BaslangicPos;
 
-        cocuk.position = cocukBaslangicPos;
+        StartCoroutine(SafeResume());
 
         FazEngelleriniGuncelle();   // engel spawn başlar
 
@@ -489,6 +489,48 @@ public class yonetici : MonoBehaviour
                 return;
             }
         }
+    }
+
+    IEnumerator SafeResume()
+    {
+        // Oyun dursun
+        Time.timeScale = 0f;
+
+        Rigidbody rb = cocuk.GetComponent<Rigidbody>();
+
+        // Karakter hareketini geçici kapat
+        karakter_kontrol kk = cocuk.GetComponent<karakter_kontrol>();
+        kk.enabled = false;
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        // Pozisyonları kesin set et
+        yol1.position = yol1BaslangicPos;
+        yol2.position = yol2BaslangicPos;
+        cocuk.position = cocukBaslangicPos + Vector3.up * 0.1f;
+
+        Physics.SyncTransforms();
+
+        // 1 frame bekle
+        yield return null;
+
+        // Rigidbody aç
+        rb.isKinematic = false;
+
+        Physics.SyncTransforms();
+
+        // 1 frame daha bekle
+        yield return null;
+
+        // Karakter kontrolü geri aç
+        kk.enabled = true;
+
+        // ŞİMDİ oyunu başlat
+        Time.timeScale = 1f;
+
+        Debug.Log("RESUME TAMAM – OYUN BASLADI");
     }
 
 }

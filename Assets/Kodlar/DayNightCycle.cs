@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class DayNightCycle : MonoBehaviour
 {
+    public bool isPausedExternally = false; // Dışarıdan kontrol için
     public FireflyManager fireflyManager;
     public Light sun;
     public float cycleDuration = 60f;
@@ -63,6 +64,7 @@ public class DayNightCycle : MonoBehaviour
 
     void Update()
     {
+        if (isPausedExternally) return; // Dışarıdan durdurulmuşsa çalışmaz
         if (sun == null) return;
 
         time += Time.deltaTime;
