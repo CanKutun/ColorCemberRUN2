@@ -20,7 +20,7 @@ public class HedefSayac : MonoBehaviour
         // skor hedefi geçtiyse yeni hedefe geç
         if (toplamSkor >= hedef)
         {
-            HedefTamamlandi();
+           // HedefTamamlandi();
             hedef += hedefAdim;
             GuncelleYazi();
         }
@@ -31,7 +31,7 @@ public class HedefSayac : MonoBehaviour
         hedefText.text = hedef.ToString();
     }
 
-    void HedefTamamlandi()
+   /* void HedefTamamlandi()
     {
         Debug.Log("HEDEF BİTTİ → yeni hedef: " + hedef);
 
@@ -41,5 +41,5 @@ public class HedefSayac : MonoBehaviour
             y.faz++;
             y.FazDegisti();
         }
-    }
+    }*/
 }

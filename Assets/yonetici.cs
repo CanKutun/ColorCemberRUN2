@@ -8,6 +8,7 @@ using UnityEngine.Localization.Settings;
 
 public class yonetici : MonoBehaviour
 {
+    public TextMeshProUGUI hedefText;
     public Transform yol2;
     Vector3 yol1BaslangicPos;
     Vector3 yol2BaslangicPos;
@@ -24,6 +25,9 @@ public class yonetici : MonoBehaviour
 
     public int faz = 1;
     public int sonrakiFazSkoru = 1000;
+    public int fazArtisMiktari = 1000;
+
+    public int maxFaz = 4;
 
     public Transform yol1;
     private float zeminY;
@@ -94,6 +98,9 @@ public class yonetici : MonoBehaviour
 
         score_value.text = puan.ToString();
 
+        if (hedefText != null)
+            hedefText.text = sonrakiFazSkoru.ToString();
+
         FazEngelleriniGuncelle(); // engel spawn buradan başlar
 
         yol1BaslangicPos = yol1.transform.position;
@@ -102,7 +109,8 @@ public class yonetici : MonoBehaviour
         Debug.Log("HighScore e bagli obje " + highScore_value.gameObject.name);
         Debug.Log("LABEL OBJ INSTANCE ID: " + GameObject.Find("highscore_label").GetInstanceID());
         Debug.Log("VALUE OBJ INSTANCE ID: " + highScore_value.gameObject.GetInstanceID());
-        
+
+       
     }
 
 
@@ -111,14 +119,12 @@ public class yonetici : MonoBehaviour
         puan += deger;
         score_value.text = puan.ToString();
 
-        var hedef = FindObjectOfType<HedefSayac>();
+      //  var hedef = FindObjectOfType<HedefSayac>();
+        //if (hedef != null)
+        //{
+          //  hedef.PuanEkle(puan);
+        //}
 
-        if (hedef != null)
-        {
-           
-            hedef.PuanEkle(puan);
-        }
-        
         int hs = PlayerPrefs.GetInt("HighScore", 0);
 
         if (puan > hs)
@@ -129,19 +135,31 @@ public class yonetici : MonoBehaviour
 
             PlayFabHighScoreManager.Instance.SendHighScore(puan);
 
-            // Eğer high score text'in varsa
             if (highScore_value != null)
                 highScore_value.text = highScore.ToString();
         }
 
-        // FAZ KONTROLÜ
+        // =========================
+        // YENİ FAZ KONTROLÜ (GARANTİLİ)
+        // =========================
+
         if (puan >= sonrakiFazSkoru)
         {
             faz++;
-            sonrakiFazSkoru += 1000;
+            sonrakiFazSkoru += fazArtisMiktari;
+
             FazEngelleriniGuncelle();
             FazDegisti();
+
+            if (hedefText != null)
+            {
+                hedefText.text = sonrakiFazSkoru.ToString();
+            }
         }
+
+      //  int sonrakiHedef = ((puan / 1000) + 1) * 1000;
+      //  hedefText.text = sonrakiHedef.ToString();
+
     }
 
     void engel_uret()
@@ -197,8 +215,6 @@ public class yonetici : MonoBehaviour
     public void tekrar_oyna()
     {
         Debug.Log("TEKRAR BASILDI");
-        Debug.Log("AdsManager null mu? " + (AdsManager.Instance == null));
-        Debug.Log("Reward hazır mı? " + AdsManager.Instance.IsRewardedReady());
 
         if (AdsManager.Instance == null)
         {
@@ -206,6 +222,7 @@ public class yonetici : MonoBehaviour
             return;
         }
 
+        //  Rewarded varsa
         if (!rewardUsed && AdsManager.Instance.IsRewardedReady())
         {
             AdsManager.Instance.ShowRewarded(
@@ -216,27 +233,27 @@ public class yonetici : MonoBehaviour
                 },
                 onFail: TryInterstitialOrContinue
             );
+            return;
         }
-        else
-        {
-            TryInterstitialOrContinue();
-        }
+
+        //  Rewarded yoksa interstitial dene
+        TryInterstitialOrContinue();
+    
     }
 
     void TryInterstitialOrContinue()
     {
         Time.timeScale = 1f;
-        //  GEÇİŞ VARSA  DEVAM
-        if (AdsManager.Instance.IsInterstitialReady())
+
+        if (AdsManager.Instance != null && AdsManager.Instance.IsInterstitialReady())
         {
             AdsManager.Instance.ShowInterstitial(() =>
             {
-                YedektenDon(); // kaldığın yerden devam
+                YedektenDon();
             });
         }
         else
         {
-            //  REKLAM YOK  SIFIRDAN
             RestartGame();
         }
     }
@@ -353,11 +370,16 @@ public class yonetici : MonoBehaviour
 
   public  void FazDegisti()
     {
+        Debug.Log("GERÇEK FAZ = " + faz);
         Debug.Log("Yeni faz: " + faz);
+        Debug.Log("Aktif Faz: " + faz);
 
         SkyManager sky = FindObjectOfType<SkyManager>();
         if (sky != null)
-            sky.FazDegisti(faz);
+        {
+            int gosterilecekFaz = Mathf.Min(faz, maxFaz);
+            sky.FazDegisti(gosterilecekFaz);
+        }
 
         if (faz == 2)
         {
@@ -369,6 +391,8 @@ public class yonetici : MonoBehaviour
             CancelInvoke("engel_uret");
             InvokeRepeating("engel_uret", 1f, 2f);
         }
+
+       
 
         FazEngelleriniGuncelle();
     }
@@ -382,13 +406,20 @@ public class yonetici : MonoBehaviour
 
         digerleri.Clear();
 
-        switch (faz)
+        
+        int aktifFazNo = faz;
+
+        if (faz > maxFaz)
+            aktifFazNo = maxFaz;
+
+
+        switch (aktifFazNo)
         {
             case 1: aktifFaz = faz1Engeller; break;
             case 2: aktifFaz = faz2Engeller; break;
             case 3: aktifFaz = faz3Engeller; break;
             case 4: aktifFaz = faz4Engeller; break;
-            default: aktifFaz = faz1Engeller; break;
+            default: aktifFaz = faz4Engeller; break;
         }
 
         if (aktifFaz == null || aktifFaz.Length == 0)

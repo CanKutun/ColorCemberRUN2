@@ -111,7 +111,7 @@ public class karakter_kontrol : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             yonet.puan_arttir(10);
-            FindObjectOfType<HedefSayac>().PuanEkle(10);
+           // FindObjectOfType<HedefSayac>().PuanEkle(10);
 
             if (CoinSfxPlayer.Instance != null)
                 CoinSfxPlayer.Instance.PlayCoin();

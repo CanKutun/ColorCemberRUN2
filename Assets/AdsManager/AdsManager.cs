@@ -9,8 +9,8 @@ public class AdsManager : MonoBehaviour
     public static AdsManager Instance;
 
     [Header("AdMob IDs (Android)")]
-    public string interstitialAdUnitId = "ca-app-pub-3601362388931534/8660143396"; 
-    public string rewardedAdUnitId     = "ca-app-pub-3601362388931534/5243642562"; 
+    public string interstitialAdUnitId = "ca-app-pub-3601362388931534/8660143396";
+    public string rewardedAdUnitId = "ca-app-pub-3601362388931534/5243642562";
 
     private InterstitialAd interstitialAd;
     private RewardedAd rewardedAd;
@@ -68,26 +68,28 @@ public class AdsManager : MonoBehaviour
             return;
         }
 
-        // REKLAM AÇILDIĞINDA → Gece-gündüzü durdur
-        interstitialAd.OnAdFullScreenContentOpened += () =>
+        InterstitialAd currentAd = interstitialAd;
+        interstitialAd = null;
+
+        currentAd.OnAdFullScreenContentOpened += () =>
         {
             DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
             if (cycle != null)
                 cycle.isPausedExternally = true;
         };
 
-        // REKLAM KAPANDIĞINDA → Gece-gündüzü devam ettir
-        interstitialAd.OnAdFullScreenContentClosed += () =>
+        currentAd.OnAdFullScreenContentClosed += () =>
         {
             DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
             if (cycle != null)
                 cycle.isPausedExternally = false;
 
             LoadInterstitial();
-            onClosed?.Invoke();
+
+            StartCoroutine(InvokeNextFrame(onClosed));
         };
 
-        interstitialAd.Show();
+        currentAd.Show();
     }
 
     // =======================
@@ -124,32 +126,43 @@ public class AdsManager : MonoBehaviour
 
         bool earned = false;
 
-        // REKLAM AÇILDIĞINDA → Gece-gündüzü durdur
-        rewardedAd.OnAdFullScreenContentOpened += () =>
+        RewardedAd currentAd = rewardedAd;
+        rewardedAd = null;
+
+        currentAd.OnAdFullScreenContentOpened += () =>
         {
             DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
             if (cycle != null)
                 cycle.isPausedExternally = true;
         };
 
-        // REKLAM KAPANDIĞINDA → Gece-gündüzü devam ettir
-        rewardedAd.OnAdFullScreenContentClosed += () =>
+        currentAd.OnAdFullScreenContentClosed += () =>
         {
             DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
             if (cycle != null)
                 cycle.isPausedExternally = false;
 
-            LoadRewarded(); // arka planda yeniden yükle
+            LoadRewarded();
 
-            if (earned)
-                onReward?.Invoke();
-            else
-                onFail?.Invoke();
+            StartCoroutine(InvokeNextFrame(() =>
+            {
+                if (earned)
+                    onReward?.Invoke();
+                else
+                    onFail?.Invoke();
+            }));
         };
 
-        rewardedAd.Show(reward =>
+        currentAd.Show(reward =>
         {
             earned = true;
         });
     }
+
+    IEnumerator InvokeNextFrame(Action action)
+    {
+        yield return null;   // 1 frame bekle
+        action?.Invoke();
+    }
+
 }
