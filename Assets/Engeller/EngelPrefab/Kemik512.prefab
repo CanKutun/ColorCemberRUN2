@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8627910214569270449}
   - component: {fileID: 9041858188230382840}
   - component: {fileID: 1338502912297070982}
+  - component: {fileID: 8607317651772528559}
   m_Layer: 0
   m_Name: Kemik512
   m_TagString: engel
@@ -106,3 +107,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.9014797, y: 1.9099832, z: 0.20000072}
   m_Center: {x: 0.119841576, y: 0.12885869, z: -0.00000034769374}
+--- !u!114 &8607317651772528559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880337314578782210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d1a87797480d343b87959eee5b6758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

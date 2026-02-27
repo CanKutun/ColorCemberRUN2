@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1753586483427548338}
   - component: {fileID: 7054331956957629408}
   - component: {fileID: 2426285353352374439}
+  - component: {fileID: 3890568903744550070}
   m_Layer: 0
   m_Name: KutukKar
   m_TagString: engel
@@ -105,3 +106,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 14.609171, y: 14.3196745, z: 4.9661617}
   m_Center: {x: -1.1286297, y: 0.00012516975, z: 2.3023727}
+--- !u!114 &3890568903744550070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8058620600164217881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d1a87797480d343b87959eee5b6758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

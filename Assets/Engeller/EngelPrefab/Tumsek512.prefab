@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 122049207317833080}
   - component: {fileID: 819446633289471640}
   - component: {fileID: 8663642871376685158}
+  - component: {fileID: 4069496135095556330}
   m_Layer: 0
   m_Name: Tumsek512
   m_TagString: engel
@@ -106,3 +107,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.2919652, y: 2.4173617, z: 0.20000003}
   m_Center: {x: 0.049404416, y: 0.1538074, z: 0}
+--- !u!114 &4069496135095556330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791736942980064119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d1a87797480d343b87959eee5b6758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

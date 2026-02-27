@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7559505905516135790}
   - component: {fileID: 2891428491383123324}
   - component: {fileID: 1479165215563858342}
+  - component: {fileID: 4841556929330781010}
   m_Layer: 0
   m_Name: Girl_Pembe
   m_TagString: engel
@@ -82,6 +83,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.33754316, y: 1.3694383, z: 0.98257506}
   m_Center: {x: 0.22111754, y: 0.6682526, z: 0.008712659}
+--- !u!114 &4841556929330781010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874531736554761657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d1a87797480d343b87959eee5b6758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2202395118575094354
 GameObject:
   m_ObjectHideFlags: 0

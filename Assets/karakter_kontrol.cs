@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class karakter_kontrol : MonoBehaviour
 {
-   
     [Header("Efektler")]
     public GameObject yildizPatlama;
 

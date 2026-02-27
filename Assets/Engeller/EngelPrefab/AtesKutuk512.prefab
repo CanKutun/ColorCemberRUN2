@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2378055703056270798}
   - component: {fileID: 5241292732628018466}
   - component: {fileID: 2408485015092126986}
+  - component: {fileID: 2467413195045501004}
   m_Layer: 0
   m_Name: AtesKutuk512
   m_TagString: engel
@@ -106,3 +107,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.71261275, y: 0.28047007, z: 0.041642427}
   m_Center: {x: -0.013496101, y: -0.0074196756, z: 0.0049129725}
+--- !u!114 &2467413195045501004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499473649287449215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d1a87797480d343b87959eee5b6758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

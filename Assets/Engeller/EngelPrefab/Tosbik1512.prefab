@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7839861196933874697}
   - component: {fileID: 4921983149866007070}
   - component: {fileID: 1358466881709721511}
+  - component: {fileID: -3341244241112164046}
   m_Layer: 0
   m_Name: Tosbik1512
   m_TagString: engel
@@ -106,3 +107,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.8308494, y: 2.239486, z: 0.20000003}
   m_Center: {x: -0.08175543, y: -0.2766055, z: 0}
+--- !u!114 &-3341244241112164046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588946005896577964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d1a87797480d343b87959eee5b6758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

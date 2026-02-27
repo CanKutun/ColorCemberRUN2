@@ -10949,6 +10949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26e0c8537bb91447b1eceded8636ed5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yolUzunluk: 10
   hedefText: {fileID: 437864687}
   yol2: {fileID: 2058410648}
   puan: 0
@@ -13971,11 +13972,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4749730850939948, guid: 1e8e1924bb442334c9125455634bb567, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 4749730850939948, guid: 1e8e1924bb442334c9125455634bb567, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.35
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4749730850939948, guid: 1e8e1924bb442334c9125455634bb567, type: 3}
       propertyPath: m_LocalRotation.w
