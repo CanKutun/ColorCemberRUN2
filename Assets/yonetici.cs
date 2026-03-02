@@ -48,13 +48,12 @@ public class yonetici : MonoBehaviour
     public GameObject altin;
     public GameObject miknatis;
 
-    float sonrakiAltinZ;
-    float altinMesafe = 30f;
-
-    float sonrakiMiknatisZ;
-    float miknatisMesafe = 60f;
+    
+    float sonrakiAltinZ = 0f;    
+    float sonrakiMiknatisZ = 0f;
 
     float sonrakiMiknatisZamani = 0f;
+
     float sonrakiEngelZ = 0f;
     float minEngelMesafe = 12f;
 
@@ -107,6 +106,7 @@ public class yonetici : MonoBehaviour
 
         cocuk = GameObject.Find("cocuk").transform;
         zeminY = cocuk.position.y;
+               
 
         // ===== BAŞLANGIÇ POZİSYONLARI =====
         cocukBaslangicPos = cocuk.position;
@@ -120,14 +120,8 @@ public class yonetici : MonoBehaviour
             cocuk.position.z + 1.2f
         );
 
-        // ===== SABİT MESAFELER (DENGELİ) =====
-        altinMesafe = 5f;       // dengeli seyrek
-        miknatisMesafe = 20f;    // gerçekten nadir
-
-        // İlk spawn noktaları
-        sonrakiEngelZ = cocuk.position.z + 12f;
-        sonrakiAltinZ = cocuk.position.z + altinMesafe;
-        sonrakiMiknatisZ = cocuk.position.z + miknatisMesafe;
+        sonrakiAltinZ = cocuk.position.z + 8f;
+        sonrakiMiknatisZ = cocuk.position.z + 20f;
 
         // Havuz
         uretme(altin, 10, altinlar);
@@ -144,7 +138,9 @@ public class yonetici : MonoBehaviour
 
     void Update()
     {
+        
         if (cocuk == null) return;
+        if (Time.timeScale == 0f) return;
 
         // ===== ENGEL SPAWN =====
         if (cocuk.position.z >= sonrakiEngelZ)
@@ -160,24 +156,18 @@ public class yonetici : MonoBehaviour
             sonrakiEngelZ += mesafe;
         }
 
-        // ===== ALTIN SPAWN =====
-        if (cocuk.position.z >= sonrakiAltinZ)
+        // ===== ALTIN ZAMAN SPAWN =====
+        while (cocuk.position.z >= sonrakiAltinZ)
         {
             altin_uret();
-
-            // Faz arttıkça daha seyrek
-            float dinamikMesafe = altinMesafe + (faz * 2f);
-            sonrakiAltinZ += dinamikMesafe;
+            sonrakiAltinZ += 12f;
         }
 
-        // ===== MIKNATIS SPAWN =====
-        if (cocuk.position.z >= sonrakiMiknatisZ)
+        // ===== MIKNATIS ZAMAN SPAWN =====
+        while (cocuk.position.z >= sonrakiMiknatisZ)
         {
             miknatis_uret();
-
-            // Çok daha seyrek
-            float dinamikMesafe = miknatisMesafe + (faz * 5f);
-            sonrakiMiknatisZ += dinamikMesafe;
+            sonrakiMiknatisZ += 70f;
         }
 
         // ===== YOL DÖNGÜ =====
@@ -187,30 +177,20 @@ public class yonetici : MonoBehaviour
         if (cocuk.position.z > yol1.position.z + yolUzunluk + tasimaGecikme)
         {
             float ileriZ = Mathf.Max(yol1.position.z, yol2.position.z) + yolUzunluk;
-
-            yol1.position = new Vector3(
-                yol1.position.x,
-                yol1.position.y,
-                ileriZ
-            );
+            yol1.position = new Vector3(yol1.position.x, yol1.position.y, ileriZ);
         }
 
         if (cocuk.position.z > yol2.position.z + yolUzunluk + tasimaGecikme)
         {
             float ileriZ = Mathf.Max(yol1.position.z, yol2.position.z) + yolUzunluk;
-
-            yol2.position = new Vector3(
-                yol2.position.x,
-                yol2.position.y,
-                ileriZ
-            );
+            yol2.position = new Vector3(yol2.position.x, yol2.position.y, ileriZ);
         }
     }
 
 
 
 
-    public void puan_arttir(int deger)
+public void puan_arttir(int deger)
     {
         puan += deger;
         score_value.text = puan.ToString();
@@ -275,6 +255,9 @@ public class yonetici : MonoBehaviour
         if (digerleri.Count == 0) return;
 
         int rast = Random.Range(0, digerleri.Count);
+
+        if (digerleri[rast].CompareTag("altin"))
+            return;
 
         if (digerleri[rast].tag == "miknatis" && Random.Range(0, 4) != 0)
             return;
@@ -406,20 +389,14 @@ public class yonetici : MonoBehaviour
 
     void altin_uret()
     {
-        GameObject a = altinlar[Random.Range(0, altinlar.Count)];
+        GameObject a = altinlar.Find(x => !x.activeInHierarchy);
+        if (a == null) return;
 
-        float ileriMesafe = 25f; // karakterden 25 birim ileri
+        float spawnZ = cocuk.position.z + 20f;
 
-        float spawnZ = cocuk.position.z + ileriMesafe;
+        float xPos = Random.value < 0.5f ? -3f : -0.5f;
 
-        float xPoz = Random.value < 0.5f ? solX : sagX;
-
-        a.transform.position = new Vector3(
-            xPoz,
-            -3f,
-            spawnZ
-        );
-
+        a.transform.position = new Vector3(xPos, -3f, spawnZ);
         a.SetActive(true);
     }
 
@@ -452,21 +429,6 @@ public class yonetici : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Scenes/oyun");
-    }
-
-    void TryInterstitialOrStart()
-    {
-        if (AdsManager.Instance != null && AdsManager.Instance.IsInterstitialReady())
-        {
-            AdsManager.Instance.ShowInterstitial(() =>
-            {
-                RestartGame();
-            });
-        }
-        else
-        {
-            RestartGame();
-        }
     }
 
 
@@ -508,97 +470,53 @@ public class yonetici : MonoBehaviour
 
     void YedektenDon()
     {
+        // 🔴 Önce varsa eski InvokeRepeating'leri iptal et
+        CancelInvoke("altin_uret");
+        CancelInvoke("miknatis_uret");
+
+        //  Tüm coroutine'leri durdur
         StopAllCoroutines();
 
+        //  Oyun devam etsin
         Time.timeScale = 1f;
 
+        //  Rigidbody sıfırla
         Rigidbody rb = cocuk.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-
-            cocuk.position += new Vector3(0f, 0f, 2f);
         }
 
+        //  Karakteri biraz ileri al
+        cocuk.position += new Vector3(0f, 0f, 2f);
+
+        //  Spawn mesafelerini resetle
         sonrakiEngelZ = cocuk.position.z + 10f;
+        sonrakiAltinZ = cocuk.position.z + 20f;
+        sonrakiMiknatisZ = cocuk.position.z + 40f;
 
-        if (engelRoutine != null)
-        {
-            StopCoroutine(engelRoutine);
-            engelRoutine = null;
-        }
-
+        //  Engel loop yeniden başlasın
         engelRoutine = StartCoroutine(EngelLoop());
 
-        InvokeRepeating("altin_uret", 0.0f, 1.0f);
-        InvokeRepeating("miknatis_uret", 5.0f, 12.0f);
-
+        //  Oyun bitti panelini kapat
         oyun_bitti_paneli.SetActive(false);
     }
 
 
     void miknatis_uret()
     {
-        GameObject a = altinlar[Random.Range(0, altinlar.Count)];
+        GameObject m = miknatislar.Find(x => !x.activeInHierarchy);
+        if (m == null) return;
 
-        float ileriMesafe = 40f; // karakterden 25 birim ileri
+        float spawnZ = cocuk.position.z + 22f;
 
-        float spawnZ = cocuk.position.z + ileriMesafe;
+        float xPos = Random.value < 0.5f ? -3f : -0.5f;
 
-        float xPoz = Random.value < 0.5f ? solX : sagX;
-
-        a.transform.position = new Vector3(
-            xPoz,
-           -3f,
-            spawnZ
-        );
-
-        a.SetActive(true);
+        m.transform.position = new Vector3(xPos, -3f, spawnZ);
+        m.SetActive(true);
     }
 
-
-    IEnumerator SafeResume()
-    {
-        // Oyun dursun
-        Time.timeScale = 0f;
-
-        Rigidbody rb = cocuk.GetComponent<Rigidbody>();
-
-        // Karakter hareketini geçici kapat
-        karakter_kontrol kk = cocuk.GetComponent<karakter_kontrol>();
-        kk.enabled = false;
-
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
-
-        // Pozisyonları kesin set et
-        yol1.position = yol1BaslangicPos;
-        yol2.position = yol2BaslangicPos;
-        cocuk.position = cocukBaslangicPos + Vector3.up * 0.1f;
-
-        Physics.SyncTransforms();
-
-        // 1 frame bekle
-        yield return null;
-
-        // Rigidbody aç
-        rb.isKinematic = false;
-
-        Physics.SyncTransforms();
-
-        // 1 frame daha bekle
-        yield return null;
-
-        // Karakter kontrolü geri aç
-        kk.enabled = true;
-
-        // ŞİMDİ oyunu başlat
-        Time.timeScale = 1f;
-
-        Debug.Log("RESUME TAMAM – OYUN BASLADI");
-    }
 
    
 

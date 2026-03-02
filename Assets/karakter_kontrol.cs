@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class karakter_kontrol : MonoBehaviour
     //  YENİ: Ayak altındaki yıldız ParticleSystem (child)
     [Header("Yıldız Efekti (Ayak Altı)")]
     public ParticleSystem yildizFX;
+
 
     [Header("Araba Üstüne Düşme Sesi")]
     public AudioClip boingClip;
@@ -24,11 +26,13 @@ public class karakter_kontrol : MonoBehaviour
     public AudioSource sfxSource;
     public AudioClip coinSesi;
 
+    public TextMeshProUGUI miknatisSureText;
+
     Rigidbody rigi;
 
     Collider kendiCollider;
 
-
+    float miknatisSure = 0.0f;
     float ziplama_gucu = 5.0f;
     float kosma_hizi = 2.0f;
 
@@ -129,11 +133,14 @@ public class karakter_kontrol : MonoBehaviour
 
             miknatis_alindi = true;
 
-            // SES
+            miknatisSure = 10f;
+            miknatisSureText.gameObject.SetActive(true);
+
+            CancelInvoke("miknatis_iptal");
+            Invoke("miknatis_iptal", 10f);
+
             if (CoinSfxPlayer.Instance != null)
                 CoinSfxPlayer.Instance.PlayMiknatis();
-
-            Invoke("miknatis_iptal", 10.0f);
         }
 
     }
@@ -141,6 +148,7 @@ public class karakter_kontrol : MonoBehaviour
     void miknatis_iptal()
     {
         miknatis_alindi = false;
+        miknatisSureText.gameObject.SetActive(false);
     }
 
 
@@ -272,6 +280,21 @@ public class karakter_kontrol : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0.0f)
+            return;
+
+        //  MIKNATIS SAYAÇ
+        if (miknatis_alindi)
+        {
+            miknatisSure -= Time.deltaTime;
+
+            if (miknatisSure < 0f)
+                miknatisSure = 0f;
+
+            miknatisSureText.text =
+                Mathf.CeilToInt(miknatisSure).ToString();
+        }
+
 #if UNITY_EDITOR
         if (Input.GetMouseButton(0))
         {
@@ -333,7 +356,10 @@ public class karakter_kontrol : MonoBehaviour
         }
 
 
-        transform.Translate(0f, 0f, kosma_hizi * Time.deltaTime);
+        if (Time.timeScale > 0f)
+        {
+            transform.Translate(0f, 0f, kosma_hizi * Time.deltaTime);
+        }
     }
 
 

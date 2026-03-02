@@ -8,7 +8,7 @@ public class donmek : MonoBehaviour
     string isim;
 
 
-    float deger = 500.0f;
+    float deger = 150.0f;
 
 
     void Start()
@@ -21,7 +21,7 @@ public class donmek : MonoBehaviour
     {
         if (isim == "miknatis")
         {
-            transform.Rotate(deger*Time.deltaTime, 0f, 0f);
+            transform.Rotate(0f, deger * Time.deltaTime, 0f, Space.World);
         }
 
         if (isim == "altin")

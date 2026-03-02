@@ -15,6 +15,9 @@ public class AdsManager : MonoBehaviour
     private InterstitialAd interstitialAd;
     private RewardedAd rewardedAd;
 
+    // 🔒 Reklam kilidi
+    private bool adIsOpen = false;
+
     void Awake()
     {
         if (Instance != null)
@@ -73,16 +76,20 @@ public class AdsManager : MonoBehaviour
 
         currentAd.OnAdFullScreenContentOpened += () =>
         {
-            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
-            if (cycle != null)
-                cycle.isPausedExternally = true;
+            if (adIsOpen) return;
+            adIsOpen = true;
+
+            Time.timeScale = 0f;
+            AudioListener.pause = true;
         };
 
         currentAd.OnAdFullScreenContentClosed += () =>
         {
-            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
-            if (cycle != null)
-                cycle.isPausedExternally = false;
+            if (!adIsOpen) return;
+            adIsOpen = false;
+
+            Time.timeScale = 1f;
+            AudioListener.pause = false;
 
             LoadInterstitial();
 
@@ -131,16 +138,20 @@ public class AdsManager : MonoBehaviour
 
         currentAd.OnAdFullScreenContentOpened += () =>
         {
-            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
-            if (cycle != null)
-                cycle.isPausedExternally = true;
+            if (adIsOpen) return;
+            adIsOpen = true;
+
+            Time.timeScale = 0f;
+            AudioListener.pause = true;
         };
 
         currentAd.OnAdFullScreenContentClosed += () =>
         {
-            DayNightCycle cycle = FindObjectOfType<DayNightCycle>();
-            if (cycle != null)
-                cycle.isPausedExternally = false;
+            if (!adIsOpen) return;
+            adIsOpen = false;
+
+            Time.timeScale = 1f;
+            AudioListener.pause = false;
 
             LoadRewarded();
 
@@ -161,8 +172,7 @@ public class AdsManager : MonoBehaviour
 
     IEnumerator InvokeNextFrame(Action action)
     {
-        yield return null;   // 1 frame bekle
+        yield return null;
         action?.Invoke();
     }
-
 }
