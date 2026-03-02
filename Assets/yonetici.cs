@@ -167,7 +167,7 @@ public class yonetici : MonoBehaviour
         while (cocuk.position.z >= sonrakiMiknatisZ)
         {
             miknatis_uret();
-            sonrakiMiknatisZ += 70f;
+            sonrakiMiknatisZ += 80f;
         }
 
         // ===== YOL DÖNGÜ =====
