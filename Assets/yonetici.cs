@@ -44,6 +44,7 @@ public class yonetici : MonoBehaviour
 
     public TextMeshProUGUI score_value;
     public TextMeshProUGUI highScore_value;
+    public TextMeshProUGUI highscore_label;
 
     public GameObject altin;
     public GameObject miknatis;
@@ -89,56 +90,42 @@ public class yonetici : MonoBehaviour
     void Start()
     {
         Collider yolCllider = yol1.GetComponent<Collider>();
-
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScore_value.text = highScore.ToString();
-
+        // REKOR LABEL AYARI (Find YOK)
         if (LocalizationSettings.SelectedLocale.Identifier.Code == "tr")
-            GameObject.Find("highscore_label")
-                .GetComponent<TextMeshProUGUI>().text = "REKOR";
+            highscore_label.text = "REKOR";
         else
-            GameObject.Find("highscore_label")
-                .GetComponent<TextMeshProUGUI>().text = "HIGH SCORE";
-
+            highscore_label.text = "HIGH SCORE";
         altinlar = new List<GameObject>();
         miknatislar = new List<GameObject>();
         digerleri = new List<GameObject>();
-
         cocuk = GameObject.Find("cocuk").transform;
         zeminY = cocuk.position.y;
-               
-
         // ===== BAŞLANGIÇ POZİSYONLARI =====
         cocukBaslangicPos = cocuk.position;
         yol1BaslangicPos = yol1.position;
         yol2BaslangicPos = yol2.position;
-
         // Karakteri biraz ileri al
         cocuk.position = new Vector3(
             cocuk.position.x,
             cocuk.position.y,
             cocuk.position.z + 1.2f
         );
-
         sonrakiAltinZ = cocuk.position.z + 8f;
         sonrakiMiknatisZ = cocuk.position.z + 20f;
-
         // Havuz
         uretme(altin, 10, altinlar);
         uretme(miknatis, 3, miknatislar);
-
         score_value.text = puan.ToString();
-
         if (hedefText != null)
             hedefText.text = sonrakiFazSkoru.ToString();
-
         FazDegisti();
         engelRoutine = StartCoroutine(EngelLoop());
     }
 
     void Update()
     {
-        
         if (cocuk == null) return;
         if (Time.timeScale == 0f) return;
 
@@ -470,7 +457,7 @@ public void puan_arttir(int deger)
 
     void YedektenDon()
     {
-        // 🔴 Önce varsa eski InvokeRepeating'leri iptal et
+        //  Önce varsa eski InvokeRepeating'leri iptal et
         CancelInvoke("altin_uret");
         CancelInvoke("miknatis_uret");
 
@@ -501,6 +488,10 @@ public void puan_arttir(int deger)
 
         //  Oyun bitti panelini kapat
         oyun_bitti_paneli.SetActive(false);
+
+        highscore_label.text = LocalizationSettings.SelectedLocale.Identifier.Code == "tr"
+    ? "REKOR"
+    : "HIGH SCORE";
     }
 
 

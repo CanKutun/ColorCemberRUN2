@@ -55,7 +55,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 64697452982272
-    m_Localized: OYUN DURAKLATILDI
+    m_Localized: OYUN DURDU
     m_Metadata:
       m_Items: []
   - m_Id: 65513941364736
@@ -83,7 +83,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1050736197342320
-    m_Localized: HAZIR OL
+    m_Localized: ISINIYOR
     m_Metadata:
       m_Items: []
   - m_Id: 15685346741448704
