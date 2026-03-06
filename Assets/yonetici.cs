@@ -22,15 +22,17 @@ public class yonetici : MonoBehaviour
     int yedekSonrakiFaz;
     Dictionary<GameObject, float> yOffset = new Dictionary<GameObject, float>();
 
-    
+
     Coroutine altinRoutine;
     Coroutine miknatisRoutine;
 
     public int puan;
     public int highScore;
 
-    float solX = -2.9f;
-    float sagX = -0.45f;
+    int sonSecilen = -1;
+
+   // float solX = -2.9f;
+  //  float sagX = -0.45f;
 
 
     public int faz = 1;
@@ -80,7 +82,8 @@ public class yonetici : MonoBehaviour
 
     bool rewardUsed = false;
 
-   
+
+
     void OnEnable()
     {
         rewardUsed = false;
@@ -122,6 +125,15 @@ public class yonetici : MonoBehaviour
             hedefText.text = sonrakiFazSkoru.ToString();
         FazDegisti();
         engelRoutine = StartCoroutine(EngelLoop());
+
+        // DEVAM kontrolü
+        if (PlayerPrefs.GetInt("ContinueGame", 0) == 1)
+        {
+            ContinueGame();
+            PlayerPrefs.SetInt("ContinueGame", 0);
+        }
+
+
     }
 
     void Update()
@@ -227,6 +239,9 @@ public void puan_arttir(int deger)
 
     void engel_uret()
     {
+        if (PlayerPrefs.GetInt("ContinueGame", 0) == 1)
+            return;
+
         Debug.Log("Pasif engel var mı?");
         Debug.Log("Toplam: " + digerleri.Count);
 
@@ -241,7 +256,14 @@ public void puan_arttir(int deger)
 
         if (digerleri.Count == 0) return;
 
-        int rast = Random.Range(0, digerleri.Count);
+        int rast;
+        do
+        {
+            rast = Random.Range(0, digerleri.Count);
+        }
+        while (rast == sonSecilen);
+
+        sonSecilen = rast;
 
         if (digerleri[rast].CompareTag("altin"))
             return;
@@ -338,6 +360,9 @@ public void puan_arttir(int deger)
 
     public void Anamenu()
     {
+        SaveProgress();
+        PlayerPrefs.Save();
+
         Time.timeScale = 1f;
 
         if (AdsManager.Instance != null && AdsManager.Instance.IsInterstitialReady())
@@ -370,6 +395,11 @@ public void puan_arttir(int deger)
 
     public void oyundan_cik()
     {
+        SaveProgress();
+
+        PlayerPrefs.SetInt("NeedAdForContinue", 1);
+
+        PlayerPrefs.Save();
         Application.Quit();
     }
 
@@ -407,19 +437,29 @@ public void puan_arttir(int deger)
         yedekFaz = faz;
         yedekSonrakiFaz = sonrakiFazSkoru;
 
+        SaveProgress();
+        PlayerPrefs.Save();
+
         oyun_bitti_paneli.SetActive(true);
          Time.timeScale = 0f;
-                   
+
+        
     }
 
     void RestartGame()
     {
+        PlayerPrefs.DeleteKey("SavedScore");
+        PlayerPrefs.DeleteKey("SavedPhase");
+        PlayerPrefs.DeleteKey("SavedZ");
+
+        PlayerPrefs.Save();
+
         Time.timeScale = 1f;
         SceneManager.LoadScene("Scenes/oyun");
     }
 
 
-  public  void FazDegisti()
+    public  void FazDegisti()
   {
         int gosterilecekFaz = ((faz - 1) % maxFaz) + 1;
 
@@ -531,6 +571,45 @@ public void puan_arttir(int deger)
             }
 
             yield return null;
+        }
+    }
+
+    void SaveProgress()
+    {
+        PlayerPrefs.SetInt("SavedScore", puan);
+        PlayerPrefs.SetInt("SavedPhase", faz);
+        PlayerPrefs.SetFloat("SavedZ", cocuk.position.z);
+        PlayerPrefs.Save();
+    }
+
+    void OnApplicationQuit()
+    {
+        SaveProgress();
+        PlayerPrefs.SetInt("NeedAdForContinue", 1);
+        PlayerPrefs.Save();
+    }
+
+    public void ContinueGame()
+    {
+        int savedScore = PlayerPrefs.GetInt("SavedScore", 0);
+
+        if (savedScore > 0)
+        {
+            puan = savedScore;
+            faz = PlayerPrefs.GetInt("SavedPhase", 1);
+            score_value.text = puan.ToString();
+
+            float savedZ = PlayerPrefs.GetFloat("SavedZ", 0);
+            cocuk.position = new Vector3(cocuk.position.x, cocuk.position.y, savedZ);
+        }
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            PlayerPrefs.SetInt("NeedAdForContinue", 1);
+            PlayerPrefs.Save();
         }
     }
 }

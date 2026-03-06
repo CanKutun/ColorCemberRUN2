@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 public class MainMenuButtonController : MonoBehaviour
 {
     [Header("Name UI")]
@@ -18,11 +19,14 @@ public class MainMenuButtonController : MonoBehaviour
     public Button settingsButton;
     public Button leaderboardButton;
     public Button exitButton;
+    public Button continueButton;
 
     [Header("Scenes")]
     public string araSahneScene = "AraSahne";
     public string settingsScene = "Settings";
     public string leaderboardScene = "Tablo";
+
+    public TMP_Text continueScoreText;
 
     void Start()
     {
@@ -42,6 +46,12 @@ public class MainMenuButtonController : MonoBehaviour
         // 3️ Play butonu (OYUNU BAŞLATIR)
         playButton.onClick.AddListener(() =>
         {
+            PlayerPrefs.DeleteKey("SavedScore");
+            PlayerPrefs.DeleteKey("SavedPhase");
+            PlayerPrefs.DeleteKey("SavedZ");
+
+            PlayerPrefs.SetInt("ContinueGame", 0); // Yeni oyun başlatmak istediğimizi belirtiyoruz
+
             SceneManager.LoadScene(araSahneScene);
         });
 
@@ -52,6 +62,32 @@ public class MainMenuButtonController : MonoBehaviour
             SceneManager.LoadScene(leaderboardScene));
 
         exitButton.onClick.AddListener(Application.Quit);
+
+        // DEVAM butonu kontrolü
+        int savedScore = PlayerPrefs.GetInt("SavedScore", 0);
+
+        if (savedScore <= 0)
+        {
+            continueButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            if (LocalizationSettings.SelectedLocale.Identifier.Code == "tr")
+            {
+                continueScoreText.text = "SKOR " + savedScore;
+            }
+            else
+            {
+                continueScoreText.text = "SCORE " + savedScore;
+            }
+        }
+
+        // DEVAM butonuna basınca
+        continueButton.onClick.AddListener(() =>
+        {
+            PlayerPrefs.SetInt("ContinueGame", 1); // Devam etmek istediğimizi belirtiyoruz
+            SceneManager.LoadScene(araSahneScene);
+        });
     }
 
     void SaveName()

@@ -63,6 +63,8 @@ public class karakter_kontrol : MonoBehaviour
     void Start()
     {
         rigi = GetComponent<Rigidbody>();
+        rigi.isKinematic = true;
+        Invoke("KarakteriBaslat", 0.5f);
         kendiCollider = GetComponent<Collider>();
         anim = GetComponent<Animator>();
 
@@ -83,8 +85,13 @@ public class karakter_kontrol : MonoBehaviour
         boingSource.loop = false;
         boingSource.volume = 0.8f;
 
-
     }
+
+    void KarakteriBaslat()
+    {
+        rigi.isKinematic = false;
+    }
+
 
     //  YENİ: Yıldız efektini güvenli şekilde oynatan yardımcı fonksiyon
     void OynatYildizEfekti()

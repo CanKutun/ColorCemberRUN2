@@ -76,7 +76,6 @@ public class AdsManager : MonoBehaviour
 
         currentAd.OnAdFullScreenContentOpened += () =>
         {
-            if (adIsOpen) return;
             adIsOpen = true;
 
             Time.timeScale = 0f;
@@ -85,7 +84,6 @@ public class AdsManager : MonoBehaviour
 
         currentAd.OnAdFullScreenContentClosed += () =>
         {
-            if (!adIsOpen) return;
             adIsOpen = false;
 
             Time.timeScale = 1f;
@@ -138,7 +136,6 @@ public class AdsManager : MonoBehaviour
 
         currentAd.OnAdFullScreenContentOpened += () =>
         {
-            if (adIsOpen) return;
             adIsOpen = true;
 
             Time.timeScale = 0f;
@@ -147,7 +144,6 @@ public class AdsManager : MonoBehaviour
 
         currentAd.OnAdFullScreenContentClosed += () =>
         {
-            if (!adIsOpen) return;
             adIsOpen = false;
 
             Time.timeScale = 1f;

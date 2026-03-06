@@ -14,6 +14,7 @@ public class AraSahneManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f; // Zamaný normal hýzda baþlat
         StartCoroutine(CountdownRoutine());
     }
 
