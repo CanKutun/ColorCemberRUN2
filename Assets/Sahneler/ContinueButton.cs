@@ -13,6 +13,8 @@ public class ContinueButton : MonoBehaviour
         {
             devamButton.SetActive(false);
         }
+
+        InvokeRepeating("CheckAdReady", 0f, 0.5f);
     }
 
     public void ContinueGame()
@@ -25,17 +27,9 @@ public class ContinueButton : MonoBehaviour
                 LoadAraSahne();
             });
         }
-        else if (AdsManager.Instance != null && AdsManager.Instance.IsInterstitialReady())
-        {
-            AdsManager.Instance.ShowInterstitial(() =>
-            {
-                PlayerPrefs.SetInt("NeedAdForContinue", 0);
-                LoadAraSahne();
-            });
-        }
         else
         {
-            Debug.Log("Reklam hazýr deðil");
+            Debug.Log("Rewarded reklam hazýr deðil");
         }
     }
 
@@ -43,5 +37,22 @@ public class ContinueButton : MonoBehaviour
     {
         SceneManager.LoadScene("AraSahne");
     }
+
+    void CheckAdReady()
+    {
+        if (AdsManager.Instance != null && AdsManager.Instance.IsRewardedReady())
+        {
+            devamButton.GetComponent<UnityEngine.UI.Button>().interactable = true;
+        }
+        else
+        {
+            devamButton.GetComponent<UnityEngine.UI.Button>().interactable = false;
+        }
+    }
+
+
 }
+
+
+
 

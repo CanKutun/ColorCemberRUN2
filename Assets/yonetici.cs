@@ -95,34 +95,49 @@ public class yonetici : MonoBehaviour
         Collider yolCllider = yol1.GetComponent<Collider>();
         highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScore_value.text = highScore.ToString();
+
         // REKOR LABEL AYARI (Find YOK)
         if (LocalizationSettings.SelectedLocale.Identifier.Code == "tr")
             highscore_label.text = "REKOR";
         else
             highscore_label.text = "HIGH SCORE";
+
         altinlar = new List<GameObject>();
         miknatislar = new List<GameObject>();
         digerleri = new List<GameObject>();
+
         cocuk = GameObject.Find("cocuk").transform;
         zeminY = cocuk.position.y;
+
         // ===== BAŞLANGIÇ POZİSYONLARI =====
         cocukBaslangicPos = cocuk.position;
         yol1BaslangicPos = yol1.position;
         yol2BaslangicPos = yol2.position;
+
         // Karakteri biraz ileri al
         cocuk.position = new Vector3(
             cocuk.position.x,
             cocuk.position.y,
             cocuk.position.z + 1.2f
         );
+
         sonrakiAltinZ = cocuk.position.z + 8f;
         sonrakiMiknatisZ = cocuk.position.z + 20f;
+
         // Havuz
         uretme(altin, 10, altinlar);
         uretme(miknatis, 3, miknatislar);
+
+        // ===== KAYIT YÜKLE =====
+        puan = PlayerPrefs.GetInt("SavedScore", 0);
+        faz = (puan / 1000) + 1;
+        sonrakiFazSkoru = faz * 1000;
+
         score_value.text = puan.ToString();
+
         if (hedefText != null)
             hedefText.text = sonrakiFazSkoru.ToString();
+
         FazDegisti();
         engelRoutine = StartCoroutine(EngelLoop());
 
@@ -132,8 +147,6 @@ public class yonetici : MonoBehaviour
             ContinueGame();
             PlayerPrefs.SetInt("ContinueGame", 0);
         }
-
-
     }
 
     void Update()
@@ -365,17 +378,8 @@ public void puan_arttir(int deger)
 
         Time.timeScale = 1f;
 
-        if (AdsManager.Instance != null && AdsManager.Instance.IsInterstitialReady())
-        {
-            AdsManager.Instance.ShowInterstitial(() =>
-            {
-                SceneManager.LoadScene("MainMenu");
-            });
-        }
-        else
-        {
-            SceneManager.LoadScene("MainMenu");
-        }
+        SceneManager.LoadScene("MainMenu");
+        
     }
 
 
@@ -577,7 +581,7 @@ public void puan_arttir(int deger)
     void SaveProgress()
     {
         PlayerPrefs.SetInt("SavedScore", puan);
-        PlayerPrefs.SetInt("SavedPhase", faz);
+       // PlayerPrefs.SetInt("SavedPhase", faz);
         PlayerPrefs.SetFloat("SavedZ", cocuk.position.z);
         PlayerPrefs.Save();
     }
@@ -596,11 +600,18 @@ public void puan_arttir(int deger)
         if (savedScore > 0)
         {
             puan = savedScore;
-            faz = PlayerPrefs.GetInt("SavedPhase", 1);
+            faz = (puan / 1000) + 1;
+            sonrakiFazSkoru = faz * 1000;
+
             score_value.text = puan.ToString();
 
             float savedZ = PlayerPrefs.GetFloat("SavedZ", 0);
-            cocuk.position = new Vector3(cocuk.position.x, cocuk.position.y, savedZ);
+
+            cocuk.position = new Vector3(
+                cocuk.position.x,
+                0f,
+                savedZ
+            );
         }
     }
 
@@ -608,6 +619,7 @@ public void puan_arttir(int deger)
     {
         if (pauseStatus)
         {
+            SaveProgress();
             PlayerPrefs.SetInt("NeedAdForContinue", 1);
             PlayerPrefs.Save();
         }
