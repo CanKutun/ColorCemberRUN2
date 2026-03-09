@@ -595,23 +595,35 @@ public void puan_arttir(int deger)
 
     public void ContinueGame()
     {
+        StartCoroutine(ContinueDelay());
+    }
+
+    IEnumerator ContinueDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+
         int savedScore = PlayerPrefs.GetInt("SavedScore", 0);
 
         if (savedScore > 0)
         {
             puan = savedScore;
             faz = (puan / 1000) + 1;
-            sonrakiFazSkoru = faz * 1000;
-
             score_value.text = puan.ToString();
 
             float savedZ = PlayerPrefs.GetFloat("SavedZ", 0);
 
-            cocuk.position = new Vector3(
-                cocuk.position.x,
-                0f,
-                savedZ
-            );
+            Vector3 pos = new Vector3(0f, 50f, savedZ);
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(pos, Vector3.down, out hit, 100f))
+            {
+                cocuk.position = new Vector3(
+                    cocuk.position.x,
+                    hit.point.y + 0.2f,
+                    savedZ
+                );
+            }
         }
     }
 

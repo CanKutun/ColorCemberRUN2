@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5183780885638304398}
   - component: {fileID: 5602701070384754608}
   - component: {fileID: 3361239835863210154}
-  - component: {fileID: 1268219669}
   - component: {fileID: 7310108213591219304}
+  - component: {fileID: 3298541358377434307}
   m_Layer: 0
   m_Name: altin
   m_TagString: altin
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.000000014488, y: -0.000000028976, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.005, z: 0.25}
+  m_LocalScale: {x: 0.4, y: 0.035, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e9c6412065895da49854b50a585a77da, type: 2}
+  - {fileID: 2100000, guid: 2108d8603f3bd8a4889e438479b3fd2d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -109,18 +109,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &1268219669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7272999356990455799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56221186e4afe94abd43f533dbdc2de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7310108213591219304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,3 +121,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e92e5541d0236914a838bca0d0aac3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3298541358377434307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7272999356990455799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c957ec9c51c23c2469de903ced8ce225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeed: 120
+  pulseSpeed: 2
+  pulseAmount: 0.05
