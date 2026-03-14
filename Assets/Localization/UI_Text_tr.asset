@@ -90,6 +90,10 @@ MonoBehaviour:
     m_Localized: HEDEF
     m_Metadata:
       m_Items: []
+  - m_Id: 26121694866567168
+    m_Localized: "YEN\u0130 OYUN"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

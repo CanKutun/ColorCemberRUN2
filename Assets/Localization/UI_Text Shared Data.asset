@@ -87,6 +87,10 @@ MonoBehaviour:
     m_Key: TXT_TARGET
     m_Metadata:
       m_Items: []
+  - m_Id: 26121694866567168
+    m_Key: BTN_PLAY
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
